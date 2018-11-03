@@ -5,7 +5,12 @@ using UnityEditor;
 using UnityEngine.UI;
 
 public class ArtController : MonoBehaviour {
-    
+
+    /// <summary>
+    /// Old code, DO NOT USE
+    /// </summary>
+
+
     //public Texture2D[] img;
     public Sprite[] img;
     public Transform showSprite;
@@ -21,13 +26,7 @@ public class ArtController : MonoBehaviour {
         GameObject textTitle;
         GameObject textDesc;
         GameObject image1;
-        GameObject image2;
-        GameObject image3;
-
-
-     
-
-
+  
         Font font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
 
         Canvas myCanvas;

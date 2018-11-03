@@ -6,20 +6,21 @@ using UnityEngine.UI;
 
 public class ArtController2 : MonoBehaviour {
 
-    private int numImages;
-
+    //Images
     public Sprite[] img;
-
     public string[] titles;
     public string[] descriptions;
-    private Vector3[] posSave = new Vector3[4];
-
-    public Transform showSprite; //Empty SpriteRender object
-
+        
+    //Image Configs
     public int dist = 50; //Radius of circle
     public int viewDist = 20; //Dist b/n edge of circle and camera
-    Vector3 centrePoint;
 
+    public Transform showSprite; //Empty SpriteRender object
+    private int numImages;
+    Vector3 centrePoint;
+    private Vector3[] posSave = new Vector3[4];
+
+    //Movement
     public float artLerpTime = 0.5f;        
     float currentLerpTime = 0;
 
@@ -27,7 +28,7 @@ public class ArtController2 : MonoBehaviour {
     private int moveCmd = 0;
     private int currLoc = 0;
 	
-
+    //Text
     GameObject canvas;
     GameObject textTitle;
     GameObject textDesc;
@@ -44,15 +45,13 @@ public class ArtController2 : MonoBehaviour {
 
         centrePoint = new Vector3(0,16,dist+viewDist);
 
+        //Create all art
         for (int i = 0; i < numImages; i++) {
             Transform artPiece = Instantiate(showSprite, Degree(i), Quaternion.identity);
             artPiece.transform.parent = this.transform;
             artPiece.name = "artPiece " + i.ToString();
             artPiece.GetComponent<SpriteRenderer>().sprite = img[i];           
         }
-
-
-
 
         //Create Canvas
         canvas = new GameObject();
@@ -67,6 +66,7 @@ public class ArtController2 : MonoBehaviour {
 
         font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
 
+        //Create writing
         textTitle = new GameObject();
         textDesc = new GameObject();
 
@@ -74,6 +74,7 @@ public class ArtController2 : MonoBehaviour {
         writer();
         reWriter(titles[0], descriptions[0]);
 
+        //For text Lerping - can modify vector3 values
         posSave[0] = textTitle.transform.localPosition;
         posSave[1] = textDesc.transform.localPosition;
         posSave[2] = posSave[0] + new Vector3(0,600,0);
@@ -88,7 +89,8 @@ public class ArtController2 : MonoBehaviour {
 
         if (Sign(moveOrder) != 0) {moveCmd = moveOrder;} //to prevent move getting stuck mid lerp
 
-        if (moveCmd != 0){
+        //movement
+        if (moveCmd != 0){ 
             currentLerpTime += Time.deltaTime;
             if (currentLerpTime > artLerpTime){
                 currentLerpTime = artLerpTime;
@@ -116,17 +118,17 @@ public class ArtController2 : MonoBehaviour {
                 currentLerpTime = 0;
             }          
         }                   
-        reWriter(titles[spin(currLoc*-1)],descriptions[spin(currLoc*-1)]);
+        reWriter(titles[spin(currLoc*-1)],descriptions[spin(currLoc*-1)]); //TODO move between text Lerps to change at top
     }
 
-    void fillWords(){
+    void fillWords(){ //Load text here
         for (int i = 0; i < numImages; i++) {
             titles[i] = "Art Piece #" + i.ToString();
             descriptions[i] = "this amazing art piece is art number " + i.ToString() + " and is about stuff.";
         }
     }
 
-    void writer(){
+    void writer(){ //Initial Write / create text locations
         // Text Title       
         textTitle.transform.parent = canvas.transform;
         textTitle.name = "Title";
@@ -138,7 +140,7 @@ public class ArtController2 : MonoBehaviour {
         text.alignment = TextAnchor.MiddleCenter;
         text.color = Color.black;
 
-        // Text position
+        // Title text position
         rectTransform = text.GetComponent<RectTransform>();
         rectTransform.localPosition = new Vector3(0, 150, 1);
         rectTransform.sizeDelta = new Vector2(800, 200);
@@ -155,20 +157,18 @@ public class ArtController2 : MonoBehaviour {
         text.alignment = TextAnchor.MiddleCenter;
         text.color = Color.black;
 
-        // Text position
+        // Description text position
         rectTransform = text.GetComponent<RectTransform>();
         rectTransform.localPosition = new Vector3(0, -175, 0);
         rectTransform.sizeDelta = new Vector2(400, 200);
     }
 
-    void reWriter(string title, string desc){
+    void reWriter(string title, string desc){ //Update Text
         textTitle.GetComponent<Text>().text = title;
         textDesc.GetComponent<Text>().text = desc;
     }
 
-
-
-    int spin(int i){
+    int spin(int i){ //loops numbers to correct values
         if (i<0){i = spin(i + numImages);}
         if (i >= numImages) {i = spin(i - numImages);}
         return i;

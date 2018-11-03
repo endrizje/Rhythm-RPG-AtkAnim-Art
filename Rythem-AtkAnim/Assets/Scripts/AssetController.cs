@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class AssetController : MonoBehaviour {
 
+    /// <summary>
+    /// Unfinished, unused code, DO NOT USE
+    /// </summary>
+
     public Sprite[] img;
     public string[] titles;
     public string[] descriptions;
