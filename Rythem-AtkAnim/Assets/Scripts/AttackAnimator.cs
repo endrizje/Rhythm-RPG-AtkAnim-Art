@@ -50,6 +50,13 @@ public class AttackAnimator : MonoBehaviour {
         LocationMap.Add("HL", new Locations(-5f, 20, 1)); //High Left
         LocationMap.Add("HR", new Locations(2.5f, 10, 1)); //High Right
 
+        //Art Demo Locations
+        LocationMap.Add("AD1", new Locations(0, 0.5f, 1));   //P1
+        LocationMap.Add("ADC1", new Locations(4, 0, 1));   //Centrepoint
+        LocationMap.Add("ADB1", new Locations(-4, 1, 1));  //Boss
+        LocationMap.Add("ADHL", new Locations(-6, 6, 1));   //High Left
+
+
         //List of all attacks and specs
         //AttackMap.Add("name", new Attacks(int targetNum, Transform prefab, Vector3 SpawnOffset, int scaleFactor, int customCmd));
         AttackMap.Add("heal",      new Attacks(0, heal,     0,0,0.0f,3,4));
@@ -92,34 +99,22 @@ public class AttackAnimator : MonoBehaviour {
     // Update is called once per frame
     void Update(){// temp for manual input
 
-        if(Input.GetKeyDown(KeyCode.Keypad1)){ATTACK("heal",4,1);}
-        if(Input.GetKeyDown(KeyCode.Keypad2)){ATTACK("slash1",1,1);}
-        if(Input.GetKeyDown(KeyCode.Keypad3)){ATTACK("slash2",1,1);}
-        if(Input.GetKeyDown(KeyCode.Keypad4)){ATTACK("fireball",3,4);}
-        if(Input.GetKeyDown(KeyCode.Keypad5)){ATTACK("arrow",2,5);}
-        if(Input.GetKeyDown(KeyCode.Keypad6)){ATTACK("healTeam", 1, 2);}
-        if(Input.GetKeyDown(KeyCode.Keypad7)){ATTACK("arrowHail", 2, 5);}
-        if(Input.GetKeyDown(KeyCode.Keypad8)){ATTACK("meteor", 2, 4);}
-        if(Input.GetKeyDown(KeyCode.Keypad9)){ATTACK("fire3", 2, 5);}
-        if(Input.GetKeyDown(KeyCode.Keypad0)){ATTACK("blizzard", 1, 5);}
-
-        /* 
-        if(Input.GetKeyDown(KeyCode.Keypad1)){Select(1);}
-        if(Input.GetKeyDown(KeyCode.Keypad2)){Select(2);}
-        if(Input.GetKeyDown(KeyCode.Keypad3)){Select(3);}
-        if(Input.GetKeyDown(KeyCode.Keypad4)){Select(4);}
-        if(Input.GetKeyDown(KeyCode.Keypad5)){Select(5);}
-        if(Input.GetKeyDown(KeyCode.Keypad6)){ATTACK(numString(6), 1, 2);}
-        if(Input.GetKeyDown(KeyCode.Keypad7)){ATTACK(numString(7), 2, 3);}
-        if(Input.GetKeyDown(KeyCode.Keypad8)){ATTACK("slash2", 2, 5);}
-        if(Input.GetKeyDown(KeyCode.Keypad9)){ATTACK("fire3", 2, 5);}
-        if(Input.GetKeyDown(KeyCode.Keypad0)){ATTACK("blizzard", 2, 5);}
-        */
+        // Demo inputs
+//        if(Input.GetKeyDown(KeyCode.Keypad1)){ATTACK("heal",4,1);}
+//        if(Input.GetKeyDown(KeyCode.Keypad2)){ATTACK("slash1",1,1);}
+//        if(Input.GetKeyDown(KeyCode.Keypad3)){ATTACK("slash2",1,1);}
+//        if(Input.GetKeyDown(KeyCode.Keypad4)){ATTACK("fireball",3,4);}
+//        if(Input.GetKeyDown(KeyCode.Keypad5)){ATTACK("arrow",2,5);}
+//        if(Input.GetKeyDown(KeyCode.Keypad6)){ATTACK("healTeam", 1, 2);}
+//        if(Input.GetKeyDown(KeyCode.Keypad7)){ATTACK("arrowHail", 2, 5);}
+//        if(Input.GetKeyDown(KeyCode.Keypad8)){ATTACK("meteor", 2, 4);}
+//        if(Input.GetKeyDown(KeyCode.Keypad9)){ATTACK("fire3", 2, 5);}
+//        if(Input.GetKeyDown(KeyCode.Keypad0)){ATTACK("blizzard", 1, 5);}
     }
 
-    void ATTACK(string AtkName, int summoner, int target){ //calls an attack
+    public void ATTACK(string AtkName, int summoner, int target){ //calls an attack
         Vector3 Pos1, Pos2;
-        if (!AttackMap.ContainsKey(AtkName)){Debug.Log("ERROR, ATTACK, Attack not in Dictionary" + AtkName); return;}
+        if (!AttackMap.ContainsKey(AtkName)){Debug.Log("ERROR, ATTACK, Attack not in Dictionary " + AtkName); return;}
 
 
         //Position Selector //TODO make switch
@@ -140,6 +135,32 @@ public class AttackAnimator : MonoBehaviour {
         else if(AttackMap[AtkName].customCmd == 2){BOOM(AtkName, Pos1, Pos2,slowshot);}//slowshot
         else{BOOM(AtkName, Pos1, Pos2,fastshot);}//default
             
+
+    }
+
+    public void ATTACKdemo(string AtkName, int summoner, int target){ //calls an attack
+        Vector3 Pos1, Pos2;
+        if (!AttackMap.ContainsKey(AtkName)){Debug.Log("ERROR, ATTACK, Attack not in Dictionary" + AtkName); return;}
+
+
+        //Position Selector //TODO make switch
+        if      (AttackMap[AtkName].targetNum == 0){Pos1 = LocationMap["AD" + summoner].Spawn; Pos2 = LocationMap["AD" + summoner].Spawn;}
+        else if (AttackMap[AtkName].targetNum == 1){Pos1 = LocationMap["AD" + summoner].Spawn; Pos2 = LocationMap["AD" + summoner].Spawn + AttackMap[AtkName].offset;}
+        else if (AttackMap[AtkName].targetNum == 2){Pos1 = LocationMap["AD" + summoner].Spawn; Pos2 = LocationMap["ADB" + target].Spawn;}
+        else if (AttackMap[AtkName].targetNum == 3){Pos1 = LocationMap["AD" + summoner].Spawn; Pos2 = LocationMap["ADB" + target].Spawn;}
+        else if (AttackMap[AtkName].targetNum == 4){Pos1 = LocationMap["AD1"].Spawn;           Pos2 = LocationMap["AD1"].Spawn;}
+        else if (AttackMap[AtkName].targetNum == 5){Pos1 = LocationMap["AD" + summoner].Spawn; Pos2 = LocationMap["ADB" + target].Spawn;}
+        else if (AttackMap[AtkName].targetNum == 6){Pos1 = LocationMap["ADHL"].Spawn;          Pos2 = LocationMap["ADC" + target].Spawn;}
+        else if (AttackMap[AtkName].targetNum == 7){Pos1 = LocationMap["ADHR"].Spawn;          Pos2 = LocationMap["ADB" + target].Spawn;}
+
+        else{Pos1 = LocationMap["P" + summoner].Spawn; Pos2 = LocationMap["E" + target].Spawn; Debug.Log("ERROR, Attack, Attack does not exist");} 
+
+
+        if     (AttackMap[AtkName].customCmd == 11){BOOMRandomizer(AtkName, Pos1, Pos2, 10, fastshot);}//multishot w/ random
+        else if(AttackMap[AtkName].customCmd == 12){BOOMRandomizer(AtkName, Pos1, Pos2, 20, slowshot);}//multishot w/ spin random
+        else if(AttackMap[AtkName].customCmd == 2){BOOM(AtkName, Pos1, Pos2,slowshot);}//slowshot
+        else{BOOM(AtkName, Pos1, Pos2,fastshot);}//default
+
 
     }
 
@@ -313,4 +334,3 @@ public class Attacks { //Attack Dictionary
         overlay = overlayX;
     }
 }
-

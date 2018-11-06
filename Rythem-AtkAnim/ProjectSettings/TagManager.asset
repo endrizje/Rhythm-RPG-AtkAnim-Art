@@ -13,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Video
   - 
   - 
   - 
@@ -43,4 +43,7 @@ TagManager:
     locked: 0
   - name: Attack Overlay
     uniqueID: 1341718603
+    locked: 0
+  - name: Video
+    uniqueID: 3841441365
     locked: 0

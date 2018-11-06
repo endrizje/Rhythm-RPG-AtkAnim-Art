@@ -13,6 +13,7 @@ public class ArtController2 : MonoBehaviour {
     public AudioClip[] music;
 
     public Sprite BG;
+    public bool anims = false;
 
     //Image Configs
     public int dist = 50; //Radius of circle
@@ -31,6 +32,10 @@ public class ArtController2 : MonoBehaviour {
     private int moveCmd = 0;
     private int currLoc = 0;
 	
+    GameObject attacker;
+    private int upCount = 0;
+    private int dbCount = 0;
+
     //Text
     GameObject canvas;
     GameObject textTitle;
@@ -52,6 +57,7 @@ public class ArtController2 : MonoBehaviour {
         //titles = new string[numImages];
         //descriptions = new string[numImages];
 
+        attacker = GameObject.Find("AttackAnimController");
         centrePoint = new Vector3(0,16,dist+viewDist);
 
         //Create all art
@@ -97,8 +103,8 @@ public class ArtController2 : MonoBehaviour {
         //For text Lerping - can modify vector3 values
         posSave[0] = textTitle.transform.localPosition;
         posSave[1] = textDesc.transform.localPosition;
-        posSave[2] = posSave[0] + new Vector3(0,600,0);
-        posSave[3] = posSave[1] + new Vector3(0,-400,0);
+        posSave[2] = posSave[0] + new Vector3(0,1200,0);
+        posSave[3] = posSave[1] + new Vector3(0,-1200,0);
 	}
 	
 
@@ -146,7 +152,7 @@ public class ArtController2 : MonoBehaviour {
             }          
         }
         else{
-            if (Input.GetKeyDown(KeyCode.Space)){
+            if (Input.GetKeyDown(KeyCode.Space)){ //Audio
                 AudioSource audio = GameObject.Find("Canvas").GetComponent<AudioSource>();
                 if (audio.isPlaying && audio.clip == music[spin(currLoc * -1)]) {
                     audio.Stop();
@@ -156,10 +162,54 @@ public class ArtController2 : MonoBehaviour {
                     audio.Play();
                 }
             }
+
+            if (anims == true && upCount >= 20 && upCount <= 40) {    
+                if (spin(currLoc * -1) == 8) attacker.GetComponent<AttackAnimator>().ATTACKdemo("blizzard",1,1);
+            }
+            if (anims == true && upCount >= 40 && upCount <= 60) {    
+                if (spin(currLoc * -1) == 8) attacker.GetComponent<AttackAnimator>().ATTACKdemo("blizzard",1,1);
+            }
+            if (anims == true && upCount >= 60 && upCount <= 80) {    
+                if (spin(currLoc * -1) == 8) attacker.GetComponent<AttackAnimator>().ATTACKdemo("blizzard",1,1);
+            }
+            if (anims == true && upCount >= 80) {                
+                upCount = 0;
+
+                switch(spin(currLoc * -1)){
+                    case 0:attacker.GetComponent<AttackAnimator>().ATTACKdemo("heal",1,1);
+                        break;
+                    case 1:
+                        if (dbCount == 0) {
+                            attacker.GetComponent<AttackAnimator>().ATTACKdemo("slash1", 1, 1);
+                            dbCount = 1;
+                        }
+                        else {
+                            attacker.GetComponent<AttackAnimator>().ATTACKdemo("slash2", 1, 1);
+                            dbCount = 0;
+                        }
+                        break;
+                    case 2:attacker.GetComponent<AttackAnimator>().ATTACKdemo("fireball",1,1);
+                        break;
+                    case 3:attacker.GetComponent<AttackAnimator>().ATTACKdemo("arrow",1,1);
+                        break;
+                    case 4:attacker.GetComponent<AttackAnimator>().ATTACKdemo("healTeam",1,1);
+                        break;
+                    case 5:attacker.GetComponent<AttackAnimator>().ATTACKdemo("meteor",1,1);
+                        break;
+                    case 6:attacker.GetComponent<AttackAnimator>().ATTACKdemo("arrowHail",1,1);
+                        break;
+                    case 7:attacker.GetComponent<AttackAnimator>().ATTACKdemo("fire3",1,1);
+                        break;
+                    case 8:attacker.GetComponent<AttackAnimator>().ATTACKdemo("blizzard",1,1);
+                        break;
+                    default:
+                        break;                       
+                }
+            }
         }
                         
         reWriter(titles[spin(currLoc*-1)],descriptions[spin(currLoc*-1)]); //TODO move between text Lerps to change at top
-
+        upCount++;
     }
 
     void fillWords(){ //Load text here

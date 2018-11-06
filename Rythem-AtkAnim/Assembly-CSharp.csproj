@@ -63,6 +63,7 @@
      <Compile Include="Assets\Scripts\AssetController.cs" />
      <Compile Include="Assets\Scripts\AtkMove.cs" />
      <Compile Include="Assets\Scripts\AttackAnimator.cs" />
+     <Compile Include="Assets\Scripts\DeveloperCommentary.cs" />
      <Compile Include="Assets\Scripts\Movement.cs" />
      <None Include="Assets\Fantasy Skybox FREE\Readme.txt" />
      <None Include="Assets\Fantasy Skybox FREE\Fog and Ambient references.txt" />
