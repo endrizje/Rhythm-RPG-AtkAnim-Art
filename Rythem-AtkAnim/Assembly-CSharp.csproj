@@ -53,6 +53,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Fantasy Skybox FREE\Demo\Scripts\GE_FantasySkyboxFREE_Demo.cs" />
+     <Compile Include="Assets\Fantasy Skybox FREE\Demo\Scripts\GE_FantasySkyboxFREE_UIs.cs" />
+     <Compile Include="Assets\GE Common Assets\GE Toggle Full Screen\Scripts\GE_ToggleFullScreenUI.cs" />
+     <Compile Include="Assets\GE Common Assets\Scripts\GE_UIResponder.cs" />
      <Compile Include="Assets\Scripts\ArtController.cs" />
      <Compile Include="Assets\Scripts\ArtController2.cs" />
      <Compile Include="Assets\Scripts\ArtMenuButton.cs" />
@@ -60,6 +64,9 @@
      <Compile Include="Assets\Scripts\AtkMove.cs" />
      <Compile Include="Assets\Scripts\AttackAnimator.cs" />
      <Compile Include="Assets\Scripts\Movement.cs" />
+     <None Include="Assets\Fantasy Skybox FREE\Readme.txt" />
+     <None Include="Assets\Fantasy Skybox FREE\Fog and Ambient references.txt" />
+     <None Include="Assets\GE Common Assets\Readme.txt" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>D:/Users/Johnny/Documents/Unity/Rythem-AtkAnim/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>

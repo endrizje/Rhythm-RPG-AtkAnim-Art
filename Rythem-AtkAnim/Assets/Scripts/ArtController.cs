@@ -90,6 +90,7 @@ public class ArtController : MonoBehaviour {
 
         image = image1.AddComponent<Image>();
         //image.sprite = Sprite.Create(img[0], new Rect(5, 5, 128, 128), new Vector2());
+        image.color = Color.white;
         image.sprite = img[0];
         rectTransform = image.GetComponent<RectTransform>();
         rectTransform.localPosition = new Vector3(0, 0, 0);
